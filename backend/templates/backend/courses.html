@@ -22,12 +22,12 @@
                 <div class="two columns u-pull-right menu">
                     <ul class="menu-items">
                         <li class="menu-item"><a href="{% url 'homepage-url' %}">Home</a></li>
-                        <li class="menu-item"><a href="{% url 'login-url' %}">Login</a></li>
-                        <li class="menu-item"><a href="{% url 'signup-url' %}">Signup</a></li>
+                        <li class="menu-item"><a href="{% url 'logout-url' %}">Logout</a></li>
+                        <!-- <li class="menu-item"><a href="{% url 'logout-url' %}">Logout</a></li> -->
                     </ul>
                     <ul>
                         <li class="submenu">
-                            <img src="{% static 'backend/Shopping-Cart.png' %}" id="img-cart">
+                            <img src="{% static 'backend/img/Shopping-Cart.png' %}" id="img-cart">
                             <div id="shopping-cart">
                                 <table id="cart-content" class="u-full-width">
                                     <thead>
@@ -38,10 +38,27 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody>
+
+                                        {% for course in courses_picked %}
+                                        <tr>
+                                            <th><img style="width: 50px;" class="dropdown-img"
+                                                    src="{{course.course_in_cart.image.url}}" alt="">
+                                            </th>
+                                            <th>{{course.course_in_cart.name}}</th>
+                                            <th>{{course.course_in_cart.low_price}}</th>
+                                            <th></th>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
                                 </table>
 
-                                <a href="#" id="clear-cart" class="button u-full-width">Clear Cart</a>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="clear-cart" value="clear-cart" style="display: none;">
+                                    <button id="clear-cart" class="button u-full-width">Clear Cart</button>
+                                </form>
                             </div>
                         </li>
                     </ul>
@@ -89,212 +106,68 @@
 
     <div id="courses-list" class="container">
         <h1 id="heading" class="heading">Online Courses</h1>
+
+        {% for message in messages %}
+        <p id="messages" style="color: rgb(196, 49, 188);">{{message}}</p>
+        {% endfor %}
+
         <div class="row">
+
+            {% for course in courses %}
             <div class="four columns">
                 <div class="card">
-                    <img src="{% static 'backend/img/welding.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>WELDING</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart add-btn" data-id="1">Add
-                            to Cart</a>
-                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <img src="{{course.image.url}}" class="course-image u-full-width">
+                        <div class="info-card">
+                            <h4>{{ course.name }}</h4>
+                            <p>{{course.author}}</p>
+                            <img src="{% static 'backend/img/stars.png' %}">
+                            <p class="price">{{course.high_price}} <span
+                                    class="u-pull-right ">{{course.low_price}}</span>
+                            </p>
+                            <input type="text" name="course_id" value="{{course.id}}" style="display: none;">
+                            <button class="u-full-width button-primary button input add-to-cart add-btn" data-id="1"
+                                type="submit">
+                                Add to Cart
+                            </button>
+
+                        </div>
+                    </form>
                 </div>
                 <!--.card-->
             </div>
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/catering2.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>CATERING SERVICES<h4>
-                                <p>Fatima Baffa Jibrin</p>
-                                <img src="{% static 'backend/img/stars.png' %}">
-                                <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                                <a href="#" class="u-full-width button-primary button input add-to-cart add-btn"
-                                    data-id="2">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/camera.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>PHOTOGRAPHY</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart add-btn" data-id="3">Add
-                            to Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
+            {% endfor %}
 
         </div>
-        <!--.row-->
-        <div class="row">
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/garment.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>GARMENT MAKING</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart add-btn" data-id="4">Add
-                            to Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/course5.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>Home Decor with recycled products</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart add-btn" data-id="5">Add
-                            to Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/course1.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>Web Design for beginners</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart add-btn" data-id="6">Add
-                            to Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-        </div>
-        <!--.row-->
-        <div class="row">
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/course2.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>Learn to cook mexican food</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart add-btn" data-id="7">Add
-                            to Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/course3.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>Build a Music Studio</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart" data-id="8">Add to
-                            Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/course4.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>Harvest your own fruits and vegetables</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart" data-id="9">Add to
-                            Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-        </div>
-        <!--.row-->
-        <div class="row">
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/course5.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>Cook home cookies</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart" data-id="10">Add to
-                            Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/course1.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>Modern JavaScript</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart" data-id="11">Add to
-                            Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-            <div class="four columns">
-                <div class="card">
-                    <img src="{% static 'backend/img/course2.jpg' %}" class="course-image u-full-width">
-                    <div class="info-card">
-                        <h4>100 Natural recipes</h4>
-                        <p>Fatima Baffa Jibrin</p>
-                        <img src="{% static 'backend/img/stars.png' %}">
-                        <p class="price">N200 <span class="u-pull-right ">N150</span></p>
-                        <a href="#" class="u-full-width button-primary button input add-to-cart" data-id="12">Add to
-                            Cart</a>
-                    </div>
-                </div>
-                <!--.card-->
-            </div>
-        </div>
-        <!--.row-->
-    </div>
 
-    <footer id="footer" class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="four columns">
-                    <nav id="primary" class="menu">
-                        <a class="link" href="#">For Business</a>
-                        <a class="link" href="#">Become an Instructor</a>
-                        <a class="link" href="#">Mobile Applications</a>
-                        <a class="link" href="#">Support</a>
-                        <a class="link" href="#">Help</a>
-                    </nav>
-                </div>
-                <div class="four columns">
-                    <nav id="secondary" class="menu">
-                        <a class="link" href="#">About Us</a>
-                        <a class="link" href="#">Work with us</a>
-                        <a class="link" href="#">Blog</a>
-                    </nav>
+
+
+
+        <footer id="footer" class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="four columns">
+                        <nav id="primary" class="menu">
+                            <a class="link" href="#">For Business</a>
+                            <a class="link" href="#">Become an Instructor</a>
+                            <a class="link" href="#">Mobile Applications</a>
+                            <a class="link" href="#">Support</a>
+                            <a class="link" href="#">Help</a>
+                        </nav>
+                    </div>
+                    <div class="four columns">
+                        <nav id="secondary" class="menu">
+                            <a class="link" href="#">About Us</a>
+                            <a class="link" href="#">Work with us</a>
+                            <a class="link" href="#">Blog</a>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <script src="{% static 'backend/js/app.js' %}"></script>
+        <!-- <script src="{% static 'backend/js/app.js' %}"></script> -->
 
 </body>
 

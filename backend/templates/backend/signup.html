@@ -18,45 +18,53 @@
             <div class="login-card">
                 <h4 class="login-title">Signup</h4>
                 <p class="sign-in">Signup to have an account</p>
-                <form id="signup_form" class="login-form">
+
+
+
+                <form id="signup_form" class="login-form" method="POST">
+                    {% csrf_token %}
                     <div class="form-control">
-                        <input id="first_name" type="text" placeholder="first name">
+                        <input id="first_name" type="text" placeholder="first name" name="first_name">
                         <small class="error-message"></small>
                     </div>
                     <div class="form-control">
-                        <input id="last_name" type="text" placeholder="last name">
+                        <input id="last_name" type="text" placeholder="last name" name="last_name">
                         <small class="error-message"></small>
                     </div>
                     <div class="form-control">
-                        <input id="phone" type="text" placeholder="phone">
+                        <input id="phone" type="text" placeholder="phone" name="phone">
                         <small class="error-message"></small>
                     </div>
                     <div class="form-control">
-                        <input id="email" type="text" placeholder="email">
+                        <input id="email" type="text" placeholder="email" name="email">
                         <small class="error-message"></small>
                     </div>
                     <div class="form-control">
-                        <input id="password" type="password" placeholder="password">
+                        <input id="password" type="password" placeholder="password" name="password1">
                         <small class="error-message"></small>
                     </div>
                     <div class="form-control">
-                        <input id="password2" type="password" placeholder="re-type password">
+                        <input id="password2" type="password" placeholder="re-type password" name="password2">
                         <small class="error-message"></small>
                     </div>
-                    <input id="submit" type="submit" />
+                    <button id="submit">Submit</button>
                     <p>Already have an account?</p>
-                    <a href="login.html">Click here to login</a>
+                    <a href="{% url 'login-url' %}">Click here to login</a>
                 </form>
             </div>
             <div class="login-banner">
                 <img src="{% static 'backend/img/abu_logo.jpeg' %}" alt="abu_logo">
                 <h4>Ahmadu Bello University</h4>
+
+                {% for error in form.errors %}
+                <p style="color: red;">{{error}}</p>
+                {% endfor %}
             </div>
         </div>
         <p class="copy-right">Powered by: &copy; 2021 <i>FatiBaffaj</i></p>
     </div>
 
-    <script src="{% static 'backend/js/signup.js' %}"></script>
+    <!-- <script src="{% static 'backend/js/signup.js' %}"></script> -->
 </body>
 
 </html>

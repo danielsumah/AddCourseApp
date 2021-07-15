@@ -123,6 +123,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
+
+MEDIA_URL = '/course_picture/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'backend/static/backend/course_picture')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

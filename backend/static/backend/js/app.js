@@ -1,7 +1,7 @@
 // Variables
 const courses = document.querySelector('#courses-list'),
-      shoppingCartContent = document.querySelector('#cart-content tbody'),
-      clearCartBtn = document.querySelector('#clear-cart');
+     shoppingCartContent = document.querySelector('#cart-content tbody'),
+     clearCartBtn = document.querySelector('#clear-cart');
 
 
 
@@ -20,7 +20,7 @@ function loadEventListeners() {
      clearCartBtn.addEventListener('click', clearCart);
 
      // Document Ready
-     document.addEventListener('DOMContentLoaded', getFromLocalStorage);
+     // document.addEventListener('DOMContentLoaded', getFromLocalStorage);
 }
 
 
@@ -28,17 +28,17 @@ function loadEventListeners() {
 
 
 // Functions
-function buyCourse(e) {
-     e.preventDefault();
-     // Use delegation to find the course that was added
-     if(e.target.classList.contains('add-to-cart')) {
-          // read the course values
-          const course = e.target.parentElement.parentElement;
+// function buyCourse(e) {
+//      e.preventDefault();
+//      // Use delegation to find the course that was added
+//      if (e.target.classList.contains('add-to-cart')) {
+//           // read the course values
+//           const course = e.target.parentElement.parentElement;
 
-          // read the values
-          getCourseInfo(course);
-     }
-}
+//           // read the values
+//           getCourseInfo(course);
+//      }
+// }
 // Reads the HTML information of the selected course
 function getCourseInfo(course) {
      // Create an Object with Course Data
@@ -86,7 +86,7 @@ function saveIntoStorage(course) {
      courses.push(course);
 
      // since storage only saves strings, we need to convert JSON into String
-     localStorage.setItem('courses', JSON.stringify(courses) );
+     localStorage.setItem('courses', JSON.stringify(courses));
 }
 
 // Get the contents from storage
@@ -95,10 +95,10 @@ function getCoursesFromStorage() {
      let courses;
 
      // if something exist on storage then we get the value, otherwise create an empty array
-     if(localStorage.getItem('courses') === null) {
+     if (localStorage.getItem('courses') === null) {
           courses = [];
      } else {
-          courses = JSON.parse(localStorage.getItem('courses') );
+          courses = JSON.parse(localStorage.getItem('courses'));
      }
      return courses;
 
@@ -109,7 +109,7 @@ function removeCourse(e) {
      let course, courseId;
 
      // Remove from the dom
-     if(e.target.classList.contains('remove')) {
+     if (e.target.classList.contains('remove')) {
           e.target.parentElement.parentElement.remove();
           course = e.target.parentElement.parentElement;
           courseId = course.querySelector('a').getAttribute('data-id');
@@ -124,8 +124,8 @@ function removeCourseLocalStorage(id) {
      let coursesLS = getCoursesFromStorage();
 
      // loop trought the array and find the index to remove
-     coursesLS.forEach(function(courseLS, index) {
-          if(courseLS.id === id) {
+     coursesLS.forEach(function (courseLS, index) {
+          if (courseLS.id === id) {
                coursesLS.splice(index, 1);
           }
      });
@@ -138,7 +138,7 @@ function removeCourseLocalStorage(id) {
 function clearCart() {
      // shoppingCartContent.innerHTML = '';
 
-     while(shoppingCartContent.firstChild) {
+     while (shoppingCartContent.firstChild) {
           shoppingCartContent.removeChild(shoppingCartContent.firstChild);
      }
 
@@ -156,7 +156,7 @@ function getFromLocalStorage() {
      let coursesLS = getCoursesFromStorage();
 
      // LOOP throught the courses and print into the cart
-     coursesLS.forEach(function(course) {
+     coursesLS.forEach(function (course) {
           // create the <tr>
           const row = document.createElement('tr');
 

@@ -20,7 +20,7 @@
                 <p class="sign-in">Sign into your account</p>
 
                 {% for message in messages %}
-                <p id="messages">{{message}}</p>
+                <p id="messages" style="color: green;">{{message}}</p>
                 {% endfor %}
 
                 <form id="login_form" class="login-form" method="POST">
@@ -33,9 +33,9 @@
                         <input id="password" type="password" placeholder="password" name="password" class="">
                         <small class="error-message"></small>
                     </div>
-                    <button id="submit" type="submit">Submit</button>
+                    <button id="submit" type="submit">Login</button>
                     <p>Don't have an account?</p>
-                    <a href="signup.html">Click here to create an account.</a>
+                    <a href="{% url 'signup-url' %}">Click here to create an account.</a>
                 </form>
             </div>
             <div class="login-banner">
