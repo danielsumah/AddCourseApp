@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'backend/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'backend/css/skeleton.css' %}">
+    <link rel="stylesheet" href="{% static 'backend/css/login.css' %}">
+    <title>Signup</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-section">
+            <div class="login-card">
+                <h4 class="login-title">Signup</h4>
+                <p class="sign-in">Signup to have an account</p>
+                <form id="signup_form" class="login-form">
+                    <div class="form-control">
+                        <input id="first_name" type="text" placeholder="first name">
+                        <small class="error-message"></small>
+                    </div>
+                    <div class="form-control">
+                        <input id="last_name" type="text" placeholder="last name">
+                        <small class="error-message"></small>
+                    </div>
+                    <div class="form-control">
+                        <input id="phone" type="text" placeholder="phone">
+                        <small class="error-message"></small>
+                    </div>
+                    <div class="form-control">
+                        <input id="email" type="text" placeholder="email">
+                        <small class="error-message"></small>
+                    </div>
+                    <div class="form-control">
+                        <input id="password" type="password" placeholder="password">
+                        <small class="error-message"></small>
+                    </div>
+                    <div class="form-control">
+                        <input id="password2" type="password" placeholder="re-type password">
+                        <small class="error-message"></small>
+                    </div>
+                    <input id="submit" type="submit" />
+                    <p>Already have an account?</p>
+                    <a href="login.html">Click here to login</a>
+                </form>
+            </div>
+            <div class="login-banner">
+                <img src="{% static 'backend/img/abu_logo.jpeg' %}" alt="abu_logo">
+                <h4>Ahmadu Bello University</h4>
+            </div>
+        </div>
+        <p class="copy-right">Powered by: &copy; 2021 <i>FatiBaffaj</i></p>
+    </div>
+
+    <script src="{% static 'backend/js/signup.js' %}"></script>
+</body>
+
+</html>
