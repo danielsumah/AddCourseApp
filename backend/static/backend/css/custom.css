@@ -62,6 +62,10 @@ header {
 	height: 40px;
 }
 
+#heading.courses-header {
+	margin-top: 13rem;
+}
+
 @media (min-width: 750px) {
 	header {
 		text-align: left;
@@ -200,6 +204,7 @@ ul {
 }
 
 .card {
+	height: 438px;
 	text-align: center;
 	border: 1px solid #e1e1e1;
 	background: white;
@@ -237,17 +242,22 @@ ul {
 }
 
 .footer {
-	/* position: fixed;
-    bottom: 0;
-    left: 0; */
+	/* position: fixed; */
+	bottom: 0;
+	left: 0;
 	width: 100vw;
-	margin-top: 40px;
+	margin-top: 6rem !important;
 	border-top: 1px solid #aaa;
 	padding-top: 40px;
 	background: linear-gradient(to right, #0c2852 0%, #e44e52 100%);
 }
 
-.footer .menu a {
+.footer .row {
+	display: flex;
+}
+
+.footer .menu,
+a {
 	display: block;
 	margin-bottom: 10px;
 	text-decoration: none;
