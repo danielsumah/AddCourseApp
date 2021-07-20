@@ -56,9 +56,9 @@
                 <img src="{% static 'backend/img/abu_logo.jpeg' %}" alt="abu_logo">
                 <h4>Ahmadu Bello University</h4>
 
-                {% for error in form.errors %}
-                <p style="color: red;">{{error}}</p>
-                {% endfor %}
+                
+                <h6 style="color: red;">{{form.errors}}</h6>
+                
             </div>
         </div>
         <p class="copy-right">Powered by: &copy; 2021 <i>FatiBaffaj</i></p>
