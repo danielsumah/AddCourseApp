@@ -1,174 +1,165 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Add Courses to Shopping Cart</title>
+		<link rel="stylesheet" href="{% static 'backend/css/normalize.css' %}" />
+		<link rel="stylesheet" href="{% static 'backend/css/skeleton.css' %}" />
+		<link rel="stylesheet" href="{% static 'backend/css/custom.css' %}" />
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add Courses to Shopping Cart</title>
-    <link rel="stylesheet" href="{% static 'backend/css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'backend/css/skeleton.css' %}">
-    <link rel="stylesheet" href="{% static 'backend/css/custom.css' %}">
-</head>
+	<body>
+		<header id="header" class="header">
+			<div class="container">
+				<div class="row">
+					<div class="four columns">
+						<img src="{% static 'backend/img/abu_logo.jpeg' %}" id="logo" />
+					</div>
+					<div class="two columns u-pull-right menu">
+						<ul class="menu-items">
+							<li class="menu-item">
+								<a href="{% url 'homepage-url' %}">Home</a>
+							</li>
+							<li class="menu-item">
+								<a href="{% url 'logout-url' %}">Logout</a>
+							</li>
+							<!-- <li class="menu-item"><a href="{% url 'logout-url' %}">Logout</a></li> -->
+						</ul>
+						<ul>
+							<li class="submenu">
+								<img
+									src="{% static 'backend/img/Shopping-Cart.png' %}"
+									id="img-cart"
+								/>
+								<div id="shopping-cart">
+									<table id="cart-content" class="u-full-width">
+										<thead>
+											<tr>
+												<th>Image</th>
+												<th>Name</th>
+												<th>Price</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for course in courses_picked %}
+											<tr>
+												<th>
+													<img
+														style="width: 50px"
+														class="dropdown-img"
+														src="{{course.course_in_cart.image.url}}"
+														alt=""
+													/>
+												</th>
+												<th>{{course.course_in_cart.name}}</th>
+												<th>{{course.course_in_cart.low_price}}</th>
+												<th></th>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
 
-<body>
-    <header id="header" class="header">
-        <div class="container">
-            <div class="row">
-                <div class="four columns">
-                    <img src="{% static 'backend/img/abu_logo.jpeg' %}" id="logo">
-                </div>
-                <div class="two columns u-pull-right menu">
-                    <ul class="menu-items">
-                        <li class="menu-item"><a href="{% url 'homepage-url' %}">Home</a></li>
-                        <li class="menu-item"><a href="{% url 'logout-url' %}">Logout</a></li>
-                        <!-- <li class="menu-item"><a href="{% url 'logout-url' %}">Logout</a></li> -->
-                    </ul>
-                    <ul>
-                        <li class="submenu">
-                            <img src="{% static 'backend/img/Shopping-Cart.png' %}" id="img-cart">
-                            <div id="shopping-cart">
-                                <table id="cart-content" class="u-full-width">
-                                    <thead>
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Name</th>
-                                            <th>Price</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+									<form action="" method="POST">
+										{% csrf_token %}
+										<input
+											type="text"
+											name="clear-cart"
+											value="clear-cart"
+											style="display: none"
+										/>
+										<button id="clear-cart" class="button u-full-width">
+											Clear Cart
+										</button>
+									</form>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</header>
 
-                                        {% for course in courses_picked %}
-                                        <tr>
-                                            <th><img style="width: 50px;" class="dropdown-img"
-                                                    src="{{course.course_in_cart.image.url}}" alt="">
-                                            </th>
-                                            <th>{{course.course_in_cart.name}}</th>
-                                            <th>{{course.course_in_cart.low_price}}</th>
-                                            <th></th>
-                                        </tr>
-                                        {% endfor %}
+		<div class="gap"></div>
 
-                                    </tbody>
-                                </table>
+		<div id="courses-list" class="container">
+			<h1 id="heading" class="heading courses-header">Online Courses</h1>
 
-                                <form action="" method="POST">
-                                    {% csrf_token %}
-                                    <input type="text" name="clear-cart" value="clear-cart" style="display: none;">
-                                    <button id="clear-cart" class="button u-full-width">Clear Cart</button>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
+			{% for message in messages %}
+			<p id="messages" style="color: rgb(196, 49, 188)">{{message}}</p>
+			{% endfor %}
 
+			<div class="row">
+				{% for course in courses %}
+				<div class="four columns">
+					<div class="card">
+						<form method="POST">
+							{% csrf_token %}
+							<img
+								src="{{course.image.url}}"
+								class="course-image u-full-width"
+							/>
+							<div class="info-card">
+								<h4>{{ course.name }}</h4>
+								<p>{{course.author}}</p>
+								<img src="{% static 'backend/img/stars.png' %}" />
+								<p class="price">
+									{{course.high_price}}
+									<span class="u-pull-right">{{course.low_price}}</span>
+								</p>
+								<input
+									type="text"
+									name="course_id"
+									value="{{course.id}}"
+									style="display: none"
+								/>
+								<button
+									class="
+										u-full-width
+										button-primary button
+										input
+										add-to-cart add-btn
+									"
+									data-id="1"
+									type="submit"
+								>
+									Add to Cart
+								</button>
+							</div>
+						</form>
+					</div>
+					<!--.card-->
+				</div>
+				{% endfor %}
+			</div>
+		</div>
 
-    <!-- <div id="hero">
-        <div class="container">
-            <div class="row">
-                <div class="six columns">
-                    <div class="hero-content">
-                        <h2>Learn Something Today</h2>
-                        <p>Special Offer, any course N150</p>
-                        <form action="#" id="search" method="post" class="form">
-                            <input class="u-full-width input" type="text" placeholder="What Do You Want To Learn? " id="search-course">
-                            <input type="submit" id="submit-search-course" class="submit-search-course">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<footer id="footer" class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="four columns">
+						<nav id="primary" class="menu">
+							<a class="link" href="#">For Business</a>
+							<a class="link" href="#">Become an Instructor</a>
+							<a class="link" href="#">Mobile Applications</a>
+							<a class="link" href="#">Support</a>
+							<a class="link" href="#">Help</a>
+						</nav>
+					</div>
+					<div class="four columns">
+						<nav id="secondary" class="menu">
+							<a class="link" href="#">About Us</a>
+							<a class="link" href="#">Work with us</a>
+							<a class="link" href="#">Blog</a>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</footer>
 
-    <div class="main-bar">
-        <div class="container">
-            <div class="row">
-                <div class="four columns icon icon1">
-                    <p>Interesting. online courses <br> Learn new skills</p>
-                </div>
-                <div class="four columns icon icon2">
-                    <p>Expert Instructors<br> Learn with different teach styles</p>
-                </div>
-                <div class="four columns icon icon3">
-                    <p>Lifetime access <br> learn at your own pace</p>
-                </div>
-            </div>
-        </div>
-
-    </div> -->
-
-    <div class="gap"></div>
-
-    <div id="courses-list" class="container">
-        <h1 id="heading" class="heading">Online Courses</h1>
-
-        {% for message in messages %}
-        <p id="messages" style="color: rgb(196, 49, 188);">{{message}}</p>
-        {% endfor %}
-
-        <div class="row">
-
-            {% for course in courses %}
-            <div class="four columns">
-                <div class="card">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <img src="{{course.image.url}}" class="course-image u-full-width">
-                        <div class="info-card">
-                            <h4>{{ course.name }}</h4>
-                            <p>{{course.author}}</p>
-                            <img src="{% static 'backend/img/stars.png' %}">
-                            <p class="price">{{course.high_price}} <span
-                                    class="u-pull-right ">{{course.low_price}}</span>
-                            </p>
-                            <input type="text" name="course_id" value="{{course.id}}" style="display: none;">
-                            <button class="u-full-width button-primary button input add-to-cart add-btn" data-id="1"
-                                type="submit">
-                                Add to Cart
-                            </button>
-
-                        </div>
-                    </form>
-                </div>
-                <!--.card-->
-            </div>
-            {% endfor %}
-
-        </div>
-
-
-
-
-        <footer id="footer" class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="four columns">
-                        <nav id="primary" class="menu">
-                            <a class="link" href="#">For Business</a>
-                            <a class="link" href="#">Become an Instructor</a>
-                            <a class="link" href="#">Mobile Applications</a>
-                            <a class="link" href="#">Support</a>
-                            <a class="link" href="#">Help</a>
-                        </nav>
-                    </div>
-                    <div class="four columns">
-                        <nav id="secondary" class="menu">
-                            <a class="link" href="#">About Us</a>
-                            <a class="link" href="#">Work with us</a>
-                            <a class="link" href="#">Blog</a>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
-        <!-- <script src="{% static 'backend/js/app.js' %}"></script> -->
-
-</body>
-
+		<!-- <script src="{% static 'backend/js/app.js' %}"></script> -->
+	</body>
 </html>
